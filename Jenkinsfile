@@ -38,7 +38,7 @@ pipeline {
       }
     }
 
-    stage('creds_check') {
+    stage('docker_push') {
       steps {
         unstash 'code'
         sh 'ci/build-docker.sh'
