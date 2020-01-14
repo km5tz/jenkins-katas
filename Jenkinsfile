@@ -1,6 +1,15 @@
 pipeline {
   agent any
   stages {
+    stage('clone down') {
+      agent {
+        label 'host'
+      }
+      steps {
+        stash(excludes: '.git', name: 'code')
+      }
+    }
+
     stage('Say Hello') {
       parallel {
         stage('Say Hello') {
@@ -16,15 +25,13 @@ pipeline {
             }
 
           }
+          options {
+            skipDefaultCheckout(true)
+          }
           steps {
+            unstash 'code'
             sh 'ci/build-app.sh'
             archiveArtifacts 'app/build/libs/'
-          }
-        }
-
-        stage('clone down') {
-          steps {
-            echo 'start'
           }
         }
 
