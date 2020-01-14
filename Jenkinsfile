@@ -22,6 +22,12 @@ pipeline {
           }
         }
 
+        stage('clone down') {
+          steps {
+            echo 'start'
+          }
+        }
+
       }
     }
 
